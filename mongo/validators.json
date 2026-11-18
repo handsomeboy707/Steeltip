@@ -1,0 +1,352 @@
+{
+  "collections": {
+    "drafts": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "additionalProperties": false,
+          "required": [
+            "_id",
+            "leg_id",
+            "revision",
+            "base_revision",
+            "players",
+            "status",
+            "visits",
+            "created_by",
+            "version",
+            "state"
+          ],
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "leg_id": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "revision": {
+              "bsonType": "int",
+              "minimum": 1
+            },
+            "base_revision": {
+              "bsonType": "int",
+              "minimum": 0
+            },
+            "players": {
+              "bsonType": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "bsonType": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              }
+            },
+            "status": {
+              "enum": [
+                "completed",
+                "abandoned"
+              ]
+            },
+            "visits": {
+              "bsonType": "array",
+              "maxItems": 1000,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "player_id",
+                  "darts"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "player_id": {
+                    "bsonType": "string",
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                  },
+                  "darts": {
+                    "bsonType": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "items": {
+                      "bsonType": "object",
+                      "required": [
+                        "segment",
+                        "multiplier"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "segment": {
+                          "bsonType": "int",
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                            12,
+                            13,
+                            14,
+                            15,
+                            16,
+                            17,
+                            18,
+                            19,
+                            20,
+                            25
+                          ]
+                        },
+                        "multiplier": {
+                          "bsonType": "int",
+                          "minimum": 1,
+                          "maximum": 3
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "created_by": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "version": {
+              "bsonType": "int",
+              "minimum": 0
+            },
+            "state": {
+              "enum": [
+                "draft",
+                "frozen"
+              ]
+            }
+          }
+        }
+      },
+      "validationAction": "error",
+      "validationLevel": "strict"
+    },
+    "revisions": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "additionalProperties": false,
+          "required": [
+            "_id",
+            "leg_id",
+            "revision",
+            "base_revision",
+            "players",
+            "status",
+            "visits",
+            "created_by",
+            "digest",
+            "derived",
+            "created_at"
+          ],
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "leg_id": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "revision": {
+              "bsonType": "int",
+              "minimum": 1
+            },
+            "base_revision": {
+              "bsonType": "int",
+              "minimum": 0
+            },
+            "players": {
+              "bsonType": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "bsonType": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              }
+            },
+            "status": {
+              "enum": [
+                "completed",
+                "abandoned"
+              ]
+            },
+            "visits": {
+              "bsonType": "array",
+              "maxItems": 1000,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "player_id",
+                  "darts"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "player_id": {
+                    "bsonType": "string",
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                  },
+                  "darts": {
+                    "bsonType": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "items": {
+                      "bsonType": "object",
+                      "required": [
+                        "segment",
+                        "multiplier"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "segment": {
+                          "bsonType": "int",
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                            12,
+                            13,
+                            14,
+                            15,
+                            16,
+                            17,
+                            18,
+                            19,
+                            20,
+                            25
+                          ]
+                        },
+                        "multiplier": {
+                          "bsonType": "int",
+                          "minimum": 1,
+                          "maximum": 3
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "created_by": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "digest": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "created_at": {
+              "bsonType": "string"
+            },
+            "derived": {
+              "bsonType": "object",
+              "required": [
+                "status",
+                "winner_id",
+                "results",
+                "replay"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "completed",
+                    "abandoned"
+                  ]
+                },
+                "winner_id": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "results": {
+                  "bsonType": "array",
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "replay": {
+                  "bsonType": "array"
+                }
+              }
+            }
+          }
+        }
+      },
+      "validationAction": "error",
+      "validationLevel": "strict"
+    }
+  },
+  "indexes": [
+    {
+      "collection": "revisions",
+      "keys": {
+        "leg_id": 1,
+        "revision": 1
+      },
+      "options": {
+        "unique": true,
+        "name": "unique_leg_revision"
+      }
+    },
+    {
+      "collection": "drafts",
+      "keys": {
+        "leg_id": 1
+      },
+      "options": {}
+    }
+  ],
+  "role": {
+    "role": "steeltipApplication",
+    "roles": [],
+    "privileges": [
+      {
+        "resource": {
+          "db": "steeltip",
+          "collection": "drafts"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update",
+          "remove"
+        ]
+      },
+      {
+        "resource": {
+          "db": "steeltip",
+          "collection": "revisions"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "listIndexes"
+        ]
+      }
+    ]
+  }
+}
